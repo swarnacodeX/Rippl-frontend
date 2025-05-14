@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.registerwithrippl {
+    position: fixed;
+    font-family: cursive;
+    left: 105px;
+    top: 110px;
+    font-family: cursive;
+    font-size: 23px;
+  }
+  .username-r-label{
+    position: fixed;
+    top:220px;
+  }
+  .usernameregister{
+    position: fixed;
+    width: 200px;
+    top:240px;
+    left:132px;
+    height: 20px;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgba(0, 181, 121, 0.758);
+  }
+.email-r-label{
+    position: fixed;
+    top:300px;
+  }
+  .emailregister{
+    position: fixed;
+    top:320px;
+    left:132px;
+    width: 200px;
+    height: 20px;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgb(0, 181, 121, 0.758);
+  }
+  .password-r-label{
+    position: fixed;
+    top:380px;
+  }
+  .passwordregister{
+    position: fixed;
+    width: 200px;
+    top:400px;
+    left:132px;
+    height: 20px;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgb(0, 181, 121, 0.758);
+  }
+  .registerbutton2{
+    position: fixed;
+    top:460px;
+    text-decoration: none;
+    left:195px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 17px;
+    background-color: rgba(157, 255, 0, 0.395);
+    border-color: rgba(191, 224, 22, 0.816);
+  }
