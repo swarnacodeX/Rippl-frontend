@@ -13,7 +13,7 @@ import {
 
 function Login() {
   const dispatch = useDispatch();
-  const usernameGlobal = useSelector((state) => state.user.usernameGlobal);
+  const emailGlobal = useSelector((state) => state.user.emailGlobal);
   const [password, setPassword] = useState("");
   const nav = useNavigate();
 
@@ -24,12 +24,12 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response1 = await axios.post("http://localhost:2400/api/auth/login", {
-        username: usernameGlobal,
+        email: emailGlobal,
         password: password,
       });
 
       const response2 = await axios.post("http://localhost:2400/api/auth/fetchdata", {
-        username: usernameGlobal,
+        email: emailGlobal,
       });
 
       dispatch(setEmailGlobal(response2.data.email));
@@ -46,12 +46,12 @@ function Login() {
       <p className="title">LOGIN</p>
 
       <div className="form_group">
-        <label className="sub_title">Username</label>
+        <label className="sub_title">Email</label>
         <input
-          placeholder="Enter your username"
+          placeholder="Enter your email"
           className="form_style"
-          value={usernameGlobal}
-          onChange={(e) => dispatch(setUsernameGlobal(e.target.value))}
+          value={emailGlobal}
+          onChange={(e) => dispatch(setEmailGlobal(e.target.value))}
         />
       </div>
 
