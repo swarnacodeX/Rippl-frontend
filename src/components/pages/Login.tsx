@@ -9,7 +9,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectGroup,
   SelectValue,
   SelectTrigger,
 } from '../ui/select'
@@ -122,7 +121,7 @@ export default function Login() {
           </FormControl>
           <SelectContent>
             <SelectItem value="Admin">Admin</SelectItem>
-            <SelectItem value="Customer">User</SelectItem>
+            <SelectItem value="User">User</SelectItem>
           </SelectContent>
         </Select>
         <FormMessage />
