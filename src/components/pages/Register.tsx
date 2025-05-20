@@ -1,6 +1,4 @@
 "use client"
-
-import * as React from "react"
 import { useForm } from "react-hook-form"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"

@@ -1,6 +1,5 @@
 "use client"
 import { useEffect } from 'react'
-import * as React from "react"
 import { useForm } from "react-hook-form"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
@@ -23,6 +22,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
+import { useDispatch } from "react-redux"
+import { setUserData } from "../state/persist/userSlice"
 
 type LoginFormValues = {
   email: string
@@ -42,6 +43,7 @@ export default function Login() {
   })
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (localStorage.getItem("accesstoken") && localStorage.getItem("email")) {
@@ -49,25 +51,42 @@ export default function Login() {
     }
   }, [navigate])
 
-  const role = form.watch("role") // 👈 Watch the selected role value
+  const role = form.watch("role")
 
   const goToSignup = () => {
-    window.location.href = "/register"
+    navigate("/register")
   }
 
-  const onSubmit = async (data: LoginFormValues) => {
-    console.log("Login Data:", data)
+ const onSubmit = async (data: LoginFormValues) => {
+  try {
+    const response = await axios.post("http://localhost:2400/api/auth/login", data);
 
-    const response = await axios.post("http://localhost:2400/api/auth/login", data)
+    if (response.status === 200 && data.role===response.data.role) {
+      const { accesstoken, firstname} = response.data;
 
-    console.log("Response:", response.data)
-    localStorage.setItem("email", data.email)
+      // ✅ Save to Redux
+      dispatch(setUserData({
+        email: data.email,
+        firstname: firstname,
+        accesstoken: accesstoken,
+        role: data.role,
+      }
+      
+      ));
+window.location.href = "/home";
+      // ✅ Optional: Also save to localStorage (already persisted by redux-persist)
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("accesstoken", accesstoken);
 
-    if (response.status === 200) {
-      localStorage.setItem("accesstoken", response.data.accesstoken)
-      window.location.href = "/home"
+      window.location.href = "/home";
     }
+    else{
+        alert("Invalid role. Please select the correct role.");
+      }
+  } catch (error) {
+    console.error("Login failed", error);
   }
+};
 
   return (
     <div className="max-w-md mx-auto mt-20 py-10 bg-white shadow-md rounded-lg p-6">
@@ -105,52 +124,51 @@ export default function Login() {
             )}
           />
 
-          {/* Role and Submit Button Side-by-Side */}
-<div className="flex items-center gap-4">
-  <FormField
-    control={form.control}
-    name="role"
-    render={({ field }) => (
-      <FormItem className="w-[350px]">
-        <FormLabel>Role</FormLabel>
-        <Select onValueChange={field.onChange} value={field.value}>
-          <FormControl>
-            <SelectTrigger>
-              <SelectValue placeholder="Select Role" />
-            </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            <SelectItem value="Admin">Admin</SelectItem>
-            <SelectItem value="User">User</SelectItem>
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
+          {/* Role and Submit */}
+          <div className="flex items-center gap-4">
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem className="w-[350px]">
+                  <FormLabel>Role</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Admin">Admin</SelectItem>
+                      <SelectItem value="User">User</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-  <Button type="submit" className="w-2/3 mt-6">
-    Login
-  </Button>
-</div>
+            <Button type="submit" className="w-2/3 mt-6">
+              Login
+            </Button>
+          </div>
 
-{/* Secret Token Field (only if role is Admin) */}
-{role === "Admin" && (
-  <FormField
-    control={form.control}
-    name="secretToken"
-    render={({ field }) => (
-      <FormItem>
-        <FormLabel>Secret Token</FormLabel>
-        <FormControl>
-          <Input placeholder="Enter Secret Token" {...field} />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
-)}
-
+          {/* Secret Token if Admin */}
+          {role === "Admin" && (
+            <FormField
+              control={form.control}
+              name="secretToken"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Secret Token</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Secret Token" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
         </form>
 
         {/* Social Buttons */}
@@ -175,7 +193,9 @@ export default function Login() {
         </Button>
 
         <p className="mt-4">New to RIPPL? Sign Up</p>
-        <Button onClick={goToSignup} className="w-full mt-6">Register</Button>
+        <Button onClick={goToSignup} className="w-full mt-6">
+          Register
+        </Button>
       </Form>
     </div>
   )
