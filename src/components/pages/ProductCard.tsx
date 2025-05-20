@@ -23,7 +23,6 @@ export function ProductCard({
   deliveryDate,
   isPrime = false,
 }: ProductCardProps) {
-  // Calculate discount percentage if original price exists
   const discount = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
