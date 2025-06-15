@@ -2,26 +2,14 @@
 import { useForm } from "react-hook-form"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@/components/ui/select"
 import { useDispatch } from 'react-redux'
 import { setUserData } from '@/components/state/persist/userSlice'
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form"
+import {Form,FormField,FormItem,FormLabel,FormControl,FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
+
 
 type RegisterFormValues = {
   email: string
@@ -45,8 +33,7 @@ export default function Register() {
   })
 
   const dispatch = useDispatch()
-  const role = form.watch("role")
-
+  const role=form.watch("role")
   const onSubmit = async (data: RegisterFormValues) => {
     try {
       const response = await axios.post('http://localhost:2400/api/auth/register', data)
@@ -181,20 +168,14 @@ export default function Register() {
         </form>
 
         {/* OAuth Buttons */}
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full flex items-center gap-4 mt-8"
+        <Button type="button" variant="outline" className="w-full flex items-center gap-4 mt-8"
           onClick={() => window.open("http://localhost:2400/api/auth/google", "_self")}
         >
           <FcGoogle className="text-xl" />
           Sign Up with Google
         </Button>
 
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full flex items-center gap-4 mt-4"
+        <Button type="button" variant="outline" className="w-full flex items-center gap-4 mt-4"
           onClick={() => window.open("http://localhost:2400/api/auth/github", "_self")}
         >
           <FaGithub className="text-xl" />

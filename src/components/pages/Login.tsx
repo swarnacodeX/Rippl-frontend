@@ -4,26 +4,15 @@ import { useForm } from "react-hook-form"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-  SelectTrigger,
-} from '../ui/select'
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form"
+import {Select,SelectContent,SelectItem,SelectValue,SelectTrigger,} from '../ui/select'
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { setUserData } from "../state/persist/userSlice"
+import { useSelector } from "react-redux"
+import type { RootState } from "../state/persist/store"
 
 type LoginFormValues = {
   email: string
@@ -42,17 +31,21 @@ export default function Login() {
     },
   })
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const email=useSelector((state:RootState)=>state.user.email);
+  const accesstoken=useSelector((state:RootState)=>state.user.accesstoken);
+  const firstname=useSelector((State:RootState)=>State.user.firstname);
+  const role=useSelector((state:RootState)=>state.user.role);
   useEffect(() => {
-    if (localStorage.getItem("accesstoken") && localStorage.getItem("email")) {
+    
+    if (email && accesstoken && firstname && role) {
       navigate("/home")
     }
-  }, [navigate])
+  }, [email, accesstoken, firstname, role,navigate])
 
-  const role = form.watch("role")
 
+   
   const goToSignup = () => {
     navigate("/register")
   }
@@ -73,11 +66,7 @@ export default function Login() {
       }
       
       ));
-window.location.href = "/home";
-      // ✅ Optional: Also save to localStorage (already persisted by redux-persist)
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("accesstoken", accesstoken);
-
+      window.location.href = "/home";
       window.location.href = "/home";
     }
     else{
@@ -94,7 +83,6 @@ window.location.href = "/home";
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
@@ -170,22 +158,15 @@ window.location.href = "/home";
             />
           )}
         </form>
-
-        {/* Social Buttons */}
         <Button
-          type="button"
-          variant="outline"
-          className="w-full flex items-center gap-4 mt-8"
+          type="button" variant="outline" className="w-full flex items-center gap-4 mt-8"
           onClick={() => window.open("http://localhost:2400/api/auth/google", "_self")}
         >
           <FcGoogle className="text-xl" />
           Login with Google
         </Button>
 
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full flex items-center gap-4 mt-4"
+        <Button type="button" variant="outline" className="w-full flex items-center gap-4 mt-4"
           onClick={() => window.open("http://localhost:2400/api/auth/github", "_self")}
         >
           <FaGithub className="text-xl" />
