@@ -36,7 +36,7 @@ export default function Register() {
   const role=form.watch("role")
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      const response = await axios.post('http://localhost:2400/api/auth/register', data)
+      const response = await axios.post('https://strim-server.onrender.com/api/auth/register', data)
       if (response.status === 200) {
         const { accesstoken } = response.data
 
