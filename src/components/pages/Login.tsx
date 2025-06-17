@@ -66,8 +66,7 @@ export default function Login() {
       }
       
       ));
-      window.location.href = "/home";
-      window.location.href = "/home";
+      window.location.href = "https://strim-client.onrender.com/home";
     }
     else{
         alert("Invalid role. Please select the correct role.");
