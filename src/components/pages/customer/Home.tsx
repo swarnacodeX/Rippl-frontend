@@ -1,6 +1,6 @@
 // src/pages/HomePage.tsx
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, Outlet } from "react-router-dom";
 import type { RootState } from "../../state/persist/store";
@@ -24,7 +24,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <main className="container mx-auto px-4 py-6">
-        <Outlet /> {/* This renders the nested route content */}
+        <Outlet />
       </main>
       <Footer />
     </div>

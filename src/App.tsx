@@ -20,13 +20,10 @@ function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        
         <Route path="/home" element={<Home />}>
-          
           <Route index element={<Navigate to="todays-deals" replace />} />
           <Route path="todays-deals" element={<TodaysDeals />} />
-          <Route path="deals" element={<TodaysDeals />} /> {/* Use correct component */}
+          <Route path="deals" element={<TodaysDeals />} />
           <Route path="sell" element={<Sell />} />
           <Route path="registry" element={<RegistryPage />} />
           <Route path="gift-cards" element={<GiftCardsPage />} />
@@ -34,10 +31,8 @@ function App() {
           <Route path="categories" element={<CategoryGrid />} />
           <Route path="account" element={<AccountPage />} />
           
-          {/* Add more nested routes here as needed */}
-          {/* Example: <Route path="some-section" element={<SomeSection />} /> */}
-          {/* Add more nested routes here as needed */}
         </Route>
+
       </Routes>
     </Router>
   );

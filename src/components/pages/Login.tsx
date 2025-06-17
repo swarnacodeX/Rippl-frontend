@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useForm } from "react-hook-form"
 import { FcGoogle } from "react-icons/fc"
-import { FaGithub } from "react-icons/fa"
+
 import { useNavigate } from "react-router-dom"
 import {Select,SelectContent,SelectItem,SelectValue,SelectTrigger,} from '../ui/select'
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage,} from "@/components/ui/form"
@@ -160,20 +160,12 @@ export default function Login() {
         </form>
         <Button
           type="button" variant="outline" className="w-full flex items-center gap-4 mt-8"
-          onClick={() => window.open("http://localhost:2400/api/auth/google", "_self")}
+          onClick={() => window.open("http://localhost:2400/api/auth/google/callback", "_self")}
         >
           <FcGoogle className="text-xl" />
           Login with Google
         </Button>
-
-        <Button type="button" variant="outline" className="w-full flex items-center gap-4 mt-4"
-          onClick={() => window.open("http://localhost:2400/api/auth/github", "_self")}
-        >
-          <FaGithub className="text-xl" />
-          Login with GitHub
-        </Button>
-
-        <p className="mt-4">New to RIPPL? Sign Up</p>
+        <p className="mt-4">New to STRIM? Sign Up</p>
         <Button onClick={goToSignup} className="w-full mt-6">
           Register
         </Button>

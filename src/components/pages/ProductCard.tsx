@@ -26,7 +26,9 @@ export function ProductCard({
   const discount = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
-
+function addToCart() {
+  console.log("added");
+}
   return (
     <Card className="h-full overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
       <div className="relative pt-4 px-4 flex-grow">
@@ -76,7 +78,7 @@ export function ProductCard({
       </div>
 
       <CardFooter className="p-4 pt-0 mt-auto">
-        <Button className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-black">
+        <Button className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-black" onClick={()=>addToCart()}>
           Add to Cart
         </Button>
       </CardFooter>
